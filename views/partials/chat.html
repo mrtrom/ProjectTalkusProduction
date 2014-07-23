@@ -1,0 +1,287 @@
+<div>
+  <div id="sidebar-wrapper-anonym">
+    <div class="profile">
+      <div class="inside">
+        <div class="info">
+          <form name="registerForm">
+            <fieldset id="registerFieldset">
+              <legend>Me</legend>
+              <input id="username" type="hidden" value="{{userInformation.username}}">
+              <div ng-hide="validations.anonymUser" class="daysleftwrap">
+                <div ng-show="newpermit.days" class="daysleft">
+                  <label><strong>You have <span class="text-error">{{days}} </span>days left to confirm your account via email. Click <span ng-click="resend()" class="text-error hereclick">here</span> to resend it to your email</strong></label>
+                </div>
+              </div>
+              <div class="alert alert-success daysleft" ng-show="newpermit.email">
+                Email has been send
+              </div>
+              <div class="row-fluid profilepic">
+                <div class="span12">
+                  <img class="{{validations.anonymUser === false ? 'popoverInfoMeClass img-rounded' : 'popoverInfoAnonymClass img-rounded'}}" id="popoverInfoMe" ng-src="{{avatar}}" width="160" height="160" data-toggle="{{validations.anonymUser === true ? 'modal' : ''}}" data-target="{{validations.anonymUser === true ? '#modMain' : ''}}">
+                  <video id="webrtc-sourcevid" muted="" autoplay="" style="width: 320px; height: 240px"></video>
+                  <ul>
+                    <li id="deleteclick" ng-click="deletePhoto()"><i class="glyphicon glyphicon-remove"></i></li>
+                    <li id="uploadclick" ng-click="uploadClick()"><i class="glyphicon glyphicon-upload"></i></li>
+                  </ul>
+                </div>
+                <upload></upload>
+              </div>
+              <div id="videoButtons">
+                <button class="btn btn-primary log" id="newVideoChat">video chat</button>
+                <button class="btn btn-primary log" id="exitVideoChat">cancel video chat</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+      <div ng-init="initchat()"></div>
+    </div>
+    <div class="user">
+      <div class="inside">
+        <form>
+          <fieldset class="fieldsetProfile">
+            <legend class="sidebar-brand">Anonym</legend>
+            <input id="confirm" type="button" ng-click="otherUser()" style="display: none">
+            <div class="row-fluid profilepic">
+              <img class="{{validations.anonymUser === false ? 'anonym-profileClass img-rounded' : 'anonym-profileAnonymClass img-rounded'}}" id="anonym-profile" ng-src="{{otherUserInfo.avatar}}" width="160" height="160" data-toggle="{{validations.anonymUser === true ? 'modal' : ''}}" data-target="{{validations.anonymUser === true ? '#modMain' : ''}}">
+              <video id="webrtc-remotevid" controls="" autoplay="" style="width: 320px; height: 240px"></video>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="chatwrap">
+    <div id="conversation" class="well well-lg">
+      <div class="container"></div>
+    </div>
+    <div class="extra-buttons" id="extra-buttons">
+      <button class="btn btn-primary log" id="nextButton" ng-click="newRoom()"><i class="glyphicon glyphicon-plus"></i>New room</button>
+      <button class="btn btn-primary log" id="changeRoom" ng-click="changeRoom()"><i class="glyphicon glyphicon-film"></i>Change room</button>
+    </div>
+    <div class="wraper-chat">
+      <form class="form-inline textChat">
+        <div id="userTyping">
+          <p class="text-info">User Typing...</p>
+        </div>
+        <div class="row-fluid">
+          <div class="chatSendContainer">
+            <div class="input">
+              <input id="data" placeholder="Press enter to send" type="text" disabled="disabled">
+            </div>
+            <input id="datasend" type="button" value="send" disabled="disabled">
+            <span class="glyphicon glyphicon-camera mycam"></span>
+            <input type="file" id="imagefile" accept="image/*">
+            <div id="btnEmoticon" class="btnEmoticon"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="mypop popoverInfoMeModal me">
+  <ul class="sidebar-nav infomodel">
+    <li>
+      <a ng-href="" class="btn btn-default btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+    </li>
+  </ul>
+  <h3 class="popover-title">My Profile</h3>
+  <alert ng-repeat="alert in alerts" close="closeAlert($index)">{{alert.msg}}</alert>
+  <div class="popover-content" ng-hide="validations.anonymUser">
+    <div ng-hide="validations.anonymUser">
+      <label>Name</label>
+      <input ng-model="userInformation.name" type="text" placeholder="Name">
+    </div>
+    <div ng-hide="validations.anonymUser">
+      <label for="datepicker-birthday">Birthday</label>
+      <p class="input-group birth">
+        <input id="datepicker-birthday" name="datepicker" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="userInformation.birth" is-open="opened" close-text="Close" datepicker-append-to-body="true">
+          <span class="input-group-btn">
+            <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+      </p>
+    </div>
+    <div ng-hide="validations.anonymUser">
+      <label ng-hide="validations.anonymUser">Email</label>
+      <input name="email" id="email" ng-model="userInformation.email" type="text" placeholder="Email contact">
+    </div>
+    <div ng-hide="validations.anonymUser">
+      <label ng-hide="validations.anonymUser">Location</label>
+      <input id="locationgeo" type="text" placeholder="Where are you?" ng-model="userInformation.location">
+      <div class="share">
+        <label>Would you like to share your location?
+          <input id="checklocation" type="checkbox" ng-model="confirmed" ng-change="locationBool();">
+        </label>
+      </div>
+    </div>
+    <div ng-hide="validations.anonymUser" class="sex">
+      <label>Gender</label>
+      <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+          {{userInformation.gender}} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu gender" role="menu">
+          <li id="male"> <a ng-click="userInformation.gender = 'Male';">Male</a></li>
+          <li id="female"> <a ng-click="userInformation.gender = 'Female';">Female</a></li>
+          <li id="other"> <a ng-click="userInformation.gender = 'Other';">Other</a></li>
+        </ul>
+      </div>
+    </div>
+    <div ng-hide="validations.anonymUser">
+      <label ng-hide="validations.anonymUser">About you</label>
+      <textarea name="about" id="about" ng-model="userInformation.description" type="text" placeholder="Description"></textarea>
+    </div>
+    <div>
+      <button ng-click="updateUsers()" class="btn btn-success">Save</button>
+    </div>
+    <div class="delete-account">
+      <p>If you want to delete your account, just click <a href="" ng-click="deleteAccount()">here</a></p>
+    </div>
+  </div>
+</div>
+<div class="mypop popoverInfoMeModal other">
+  <ul class="sidebar-nav infomodel">
+    <li>
+      <a ng-href="" class="btn btn-default btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+    </li>
+  </ul>
+  <h3 class="popover-title">Anonym info</h3>
+  <div class="popover-content">
+    <div ng-hide="validations.anonymOtherUserValidationFields.Name">
+      <label>Name</label>
+      <label>{{otherUserInfo.name}}</label>
+    </div>
+    <div ng-hide="validations.anonymOtherUserValidationFields.Birth">
+      <label>Birth</label>
+      <label>{{otherUserInfo.birth | date:'MMM - d, yyyy'}}</label>
+    </div>
+    <div ng-hide="validations.anonymOtherUserValidationFields.Email">
+      <label>Email</label>
+      <label>{{otherUserInfo.email}}</label>
+    </div>
+    <div ng-hide="validations.anonymOtherUserValidationFields.Location">
+      <label>Location</label>
+      <label>{{otherUserInfo.location}}</label>
+    </div>
+    <div ng-hide="validations.anonymOtherUserValidationFields.Gender">
+      <label>Gender</label>
+      <label>{{otherUserInfo.gender}}</label>
+    </div>
+    <div ng-hide="validations.anonymOtherUserValidationFields.Description">
+      <label>About me</label>
+      <label>{{otherUserInfo.description}}</label>
+    </div>
+    <div ng-show="otherUserInfo.username === 'Anonym'" class="divhelp">
+      <p class="prehelp">Sorry :( this is an Anonym user and doesn't have info for us.</p>
+      <p class="help">Help Sharing with your friends! <a>Share!</a></p>
+    </div>
+  </div>
+</div>
+<!-- modal home password -->
+<div class="modal fade" id="modMain" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="color: #000;margin: 0;padding: 0">Welcome</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <home></home>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal remember password -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form ng-submit="forgotpass()">
+        <div class="modal-header">
+          <h3 style="color: #000;margin: 0;padding: 0"><%= __('EnterEmail') %></h3>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        </div>
+        <div class="modal-body">
+          <div ng-show="password.remember" class="alert alert-success"><strong><%= __('Success') %> </strong><%= __('EmailHasBeenSent') %></div>
+          <div ng-show="password.remembererror" class="alert alert-danger"><strong><%= __('Oops') %> </strong><%= __('EmailDoesNotExist') %></div>
+          <div class="input-prepend"><span class="add-on"> <i class="icon-envelope"></i></span>
+            <input type="email" placeholder="<%= __('Email') %>" id="forgotemail" name="forgotemail" ng-model="Remember.forgotemail" required="required">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary"><%= __('Send') %></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- first modal -->
+<div class="modal fade" id="firstlight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="color: #000;margin: 0;padding: 0">Hi there!</h3>
+      </div>
+      <div class="modal-body">
+        <p>Welcome to talkus! click <a ng-click="getLog()">here</a> to sign up or login; or just click <a ng-click="chatNow()">here</a> if you wanna chat NOW!</p>
+        <div class="terms">
+          <p>When you click in "chat" or "sign up / login" you are accepting <a ng-click="openTerms()">this</a> terms</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal terms -->
+<div class="modal fade" id="terms" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="color: #000;margin: 0;padding: 0">Terms</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <p>Welcome to talkus!</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal safari -->
+<div class="modal fade" id="safariModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="color: #000;margin: 0;padding: 0">Ooops!</h3>
+      </div>
+      <div class="modal-body">
+        <p>Sorry, but we don't support video chat in this browser. You can go back to the text chat clicking <a href="" ng-click="goChat()">here</a> or choose another browser :)</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal camera -->
+<div class="modal fade" id="cameraModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="color: #000;margin: 0;padding: 0">Ooops!</h3>
+      </div>
+      <div class="modal-body">
+        <p>Sorry, looks like you don't have a camera or you are using a unsupported browser</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal camera 2 -->
+<div class="modal fade" id="camera2Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="color: #000;margin: 0;padding: 0">Ooops!</h3>
+      </div>
+      <div class="modal-body">
+        <p>Sorry, looks like you don't have a camera or you are using a unsupported browser. You can go back to the text chat clicking <a href="" ng-click="goChat()"></a> </p>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="scripts/01a204d4.chat.js"></script>

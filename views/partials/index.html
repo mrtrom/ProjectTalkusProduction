@@ -1,0 +1,55 @@
+<div class="centerform">
+    <h1 class="inew"><%= __('SignUp') %></h1>
+    <form name="registerForm" ng-submit="submitRegister()" class="form-horizontal front-form">
+        <div ng-show="validations.invalidEmailFormat" class="alert alert-danger">
+            <p><strong><%= __('Email') %></strong><%= __('FormatIncorrect') %></p>
+        </div>
+        <div ng-show="validations.invalidUsername" class="alert alert-danger">
+            <p><strong><%= __('Username') %></strong> <%= __('UsernameExists') %></p>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <input name="username" ng-model="userObject.user.username" type="text" placeholder="<%= __('Username') %>" required="required">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <input name="email" id="email" ng-model="userObject.user.email" type="text" placeholder="<%= __('Email') %>" required="required">
+            </div>
+        </div>
+        <div class="control-group password">
+            <div class="controls">
+                <input name="password" ng-model="userObject.user.password" type="password" placeholder="<%= __('Password') %>" required="required">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-primary log"><%= __('SignUp') %></button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="centerform">
+    <h1 class="inew"><%= __('SignIn') %></h1>
+    <form name="singInForm" ng-submit="submitLogin()" class="form-horizontal front-form">
+        <div ng-show="permissions.invalidUserInfo" class="alert alert-danger">
+            <p><strong><%= __('Username') %></strong> <%= __('Or') %> <strong><%= __('Password') %></strong> <%= __('Incorrect') %></p>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <input name="username" ng-model="session.username" type="text" placeholder="<%= __('UsernameOrEmail') %>" required="required">
+            </div>
+        </div>
+        <div class="control-group password">
+            <div class="controls">
+                <input name="password" ng-model="session.password" type="password" placeholder="<%= __('Password') %>" required="required">
+            </div>
+            <a href="" data-toggle="modal" data-target="#myModal"><%= __('ForgotPassword') %></a>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-primary log"><%= __('SignIn') %></button>
+            </div>
+        </div>
+    </form>
+</div>
