@@ -9,15 +9,16 @@
   <base href="/">
   <title></title>
   <meta name="description" content="">
-  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-  <!--[if lt IE 9]>
+
+    <!--[if lt IE 9]>
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <![endif]-->
 
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
   <link rel="stylesheet" href="styles/b20f5034.vendor.css"/>
-  <link rel="stylesheet" href="styles/e29dd47f.main.css"/>
+  <link rel="stylesheet" href="styles/929b1056.main.css"/>
 
   <!-- Fonts -->
   <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -34,15 +35,16 @@
         </a>
         <div ng-show="LoginValidations.showLogin">
           <a class="navbar-status" href="" data-toggle="modal" data-target="#modMain">
-            <i class="fa fa-play-circle"></i>  <span class="light">{{LoginMenu.title}}</span>
+            <i class="fa fa-play-circle"></i>  <span class="light">{{LoginMenu.title | translate}}</span>
           </a>
         </div>
         <div ng-hide="LoginValidations.showLogin">
           <a class="navbar-status" href="" ng-click="logout()">
-            <i class="fa fa-play-circle"></i>  <span class="light">{{LoginMenu.title}}</span>
+            <i class="fa fa-play-circle"></i>  <span class="light">{{LoginMenu.title | translate}}</span>
           </a>
         </div>
         <a id="menu-toggle-anonym" href="#" class="btn btn-primary btn-lg toggle"><i class="fa fa-bars"></i></a>
+
       </div>
     </div>
     <!-- /.container -->
@@ -68,11 +70,11 @@
 <script src="bower_components/json3/lib/json3.min.js"></script>
 <![endif]-->
 
-<script src="scripts/005b8ae7.vendor.js"></script>
+<script src="scripts/072221fe.vendor.js"></script>
 
 <script src="scripts/3f6db4ea.public.js"></script>
 
-<script src="scripts/a26d4210.scripts.js"></script>
+<script src="scripts/d0e22074.scripts.js"></script>
 
 <!-- External scripts -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPDKJmyaz07K3RpG1LAMXnKbUYJ4creTA&libraries=places&sensor=false"></script>

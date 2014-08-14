@@ -1,0 +1,19 @@
+{
+	"EnterEmail": "EnterEmail",
+	"Success": "Success",
+	"EmailHasBeenSent": "EmailHasBeenSent",
+	"Oops": "Oops",
+	"EmailDoesNotExist": "EmailDoesNotExist",
+	"Email": "Email",
+	"Send": "Send",
+	"SignUp": "SignUp",
+	"FormatIncorrect": "FormatIncorrect",
+	"Username": "Username",
+	"UsernameExists": "UsernameExists",
+	"Password": "Password",
+	"SignIn": "SignIn",
+	"Or": "Or",
+	"Incorrect": "Incorrect",
+	"UsernameOrEmail": "UsernameOrEmail",
+	"ForgotPassword": "ForgotPassword"
+}

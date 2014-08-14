@@ -5,7 +5,13 @@
         <div class="info">
           <form name="registerForm">
             <fieldset id="registerFieldset">
-              <legend>Me</legend>
+              <legend>Me
+                  <div class="language">
+                  <a ng-click="lang('es')" ng-href=""><img src="images/flags/spain.png" alt=""></a>
+                  <a ng-click="lang('en')" ng-href=""><img src="images/flags/uk.png" alt=""></a>
+              </div>
+              </legend>
+
               <input id="username" type="hidden" value="{{userInformation.username}}">
               <div ng-hide="validations.anonymUser" class="daysleftwrap">
                 <div ng-show="newpermit.days" class="daysleft">
@@ -43,7 +49,11 @@
             <legend class="sidebar-brand">Anonym</legend>
             <input id="confirm" type="button" ng-click="otherUser()" style="display: none">
             <div class="row-fluid profilepic">
+
               <img class="{{validations.anonymUser === false ? 'anonym-profileClass img-rounded' : 'anonym-profileAnonymClass img-rounded'}}" id="anonym-profile" ng-src="{{otherUserInfo.avatar}}" width="160" height="160" data-toggle="{{validations.anonymUser === true ? 'modal' : ''}}" data-target="{{validations.anonymUser === true ? '#modMain' : ''}}">
+                <button ng-show="likes" ng-disabled="readyLiked" ng-click="biped()" type="button" class="btn btn-primary likes-style" style="margin: 0 auto 20px auto;display: block">
+                    <span class="glyphicon glyphicon-thumbs-up"></span> {{likes}} Bips!
+                </button>
               <video id="webrtc-remotevid" controls="" autoplay="" style="width: 320px; height: 240px"></video>
             </div>
           </fieldset>
@@ -197,18 +207,18 @@
     <div class="modal-content">
       <form ng-submit="forgotpass()">
         <div class="modal-header">
-          <h3 style="color: #000;margin: 0;padding: 0"><%= __('EnterEmail') %></h3>
+          <h3 style="color: #000;margin: 0;padding: 0">{{'Enter email' | translate}}</h3>
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         </div>
         <div class="modal-body">
-          <div ng-show="password.remember" class="alert alert-success"><strong><%= __('Success') %> </strong><%= __('EmailHasBeenSent') %></div>
-          <div ng-show="password.remembererror" class="alert alert-danger"><strong><%= __('Oops') %> </strong><%= __('EmailDoesNotExist') %></div>
+          <div ng-show="password.remember" class="alert alert-success"><strong>{{'Success' | translate}} </strong>{{'Email has been sent' | translate}}</div>
+          <div ng-show="password.remembererror" class="alert alert-danger"><strong>{{'Oops' | translate}} </strong>{{'This email does not exist' | translate}}</div>
           <div class="input-prepend"><span class="add-on"> <i class="icon-envelope"></i></span>
-            <input type="email" placeholder="<%= __('Email') %>" id="forgotemail" name="forgotemail" ng-model="Remember.forgotemail" required="required">
+            <input type="email" placeholder="{{'Email' | translate}}" id="forgotemail" name="forgotemail" ng-model="Remember.forgotemail" required="required">
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary"><%= __('Send') %></button>
+          <button type="submit" class="btn btn-primary">{{'Send' | translate}}</button>
         </div>
       </form>
     </div>
@@ -284,4 +294,4 @@
     </div>
   </div>
 </div>
-<script src="scripts/01a204d4.chat.js"></script>
+<script src="scripts/2d5e0d81.chat.js"></script>
